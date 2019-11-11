@@ -59,6 +59,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Layout from '../components/material/Layout';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import Footer from '../components/material/Footer';
+import {muscles, exercises} from './store.js';
+
 export default class RootApp extends App {
     componentDidMount() {
         // Remove the server-side injected CSS.
@@ -68,18 +78,57 @@ export default class RootApp extends App {
         }
     }
 
+    
+    state = {
+        exercises
+    }
+
+    getExerciseByMuscles(){
+        return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
+                const {muscles} = exercise
+
+                exercises[muscles] = exercises[muscles]
+                ? [...exercises[muscles], exercise] 
+                : [exercise]
+
+                return exercises
+            }, {})
+        )
+
+    }
+
     render() {
+        
+//console.log(this.getExerciseByMuscles())
+
         const { Component, ...other } = this.props;
+
+        //const exercises = this.getExerciseByMuscles()
+        const exercises = this.getExerciseByMuscles()
+
         return (
             <Container>
                 <Head>
                     <title>Static Website</title>
                 </Head>
                 <CssBaseline />
-                <Layout>
-                    <Component {...other} />
-                </Layout>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" aria-label="menu">
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography variant="h6" >
+                            News
+                            </Typography>
+                            <Button color="inherit">Login</Button>
+                        </Toolbar>
+                    </AppBar>
+                    <Component {...other} exercises={exercises} />
+                    <Footer muscles={muscles}/>
+
             </Container>
+
+
         );
     }
 }

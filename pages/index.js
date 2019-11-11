@@ -24,7 +24,9 @@ export default (props) => {
 
 import History from '../components/History';
 
+
 export default (props) => {
+    console.log(`index props`, props);
     return (
         <div>
             Home

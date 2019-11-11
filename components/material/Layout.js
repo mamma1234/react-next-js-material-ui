@@ -89,6 +89,14 @@ class Layout extends Component {
                                     </ListItem>
                                 </a>
                             </Link>
+                            <Link href="/exercises">
+                                <a>
+                                    <ListItem button>
+                                        <ListItemIcon><Mail /></ListItemIcon>
+                                        <ListItemText primary="Exercises"/>
+                                    </ListItem>
+                                </a>
+                            </Link>                            
                         </List>
                     </div>
                 </Drawer>
